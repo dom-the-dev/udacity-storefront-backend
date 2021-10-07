@@ -60,3 +60,8 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 
 Description
 
+### Scripts
+
+`db-migrate create`
+`db-migrate up`
+`db-migrate down`

@@ -40,9 +40,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
-var product_1 = require("../models/product");
+var products_1 = require("../models/products");
 var router = express_1["default"].Router();
-var store = new product_1.ProductStore();
+var store = new products_1.ProductStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products;
     return __generator(this, function (_a) {

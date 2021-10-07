@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express"
-import {Product, ProductStore} from '../models/product'
+import {Products, ProductStore} from '../models/products'
 
 const router = express.Router()
 const store = new ProductStore()
@@ -17,7 +17,7 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
 
-    const product: Product = {
+    const product: Products = {
         name: req.body.name,
         price: req.body.price,
     }
