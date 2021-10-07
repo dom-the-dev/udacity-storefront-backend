@@ -74,7 +74,8 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 0:
                 product = {
                     name: req.body.name,
-                    price: req.body.price
+                    price: req.body.price,
+                    category: req.body.category
                 };
                 return [4 /*yield*/, store.create(product)];
             case 1:

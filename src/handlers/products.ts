@@ -20,6 +20,7 @@ const create = async (req: Request, res: Response) => {
     const product: Products = {
         name: req.body.name,
         price: req.body.price,
+        category: req.body.category
     }
 
     const newProduct = await store.create(product)

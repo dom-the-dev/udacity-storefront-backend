@@ -100,12 +100,12 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *';
+                        sql = 'INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *';
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn
-                                .query(sql, [p.name, p.price])];
+                                .query(sql, [p.name, p.price, p.category])];
                     case 2:
                         result = _a.sent();
                         product = result.rows[0];
