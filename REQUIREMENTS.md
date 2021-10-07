@@ -10,45 +10,54 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 
 ## API Endpoints
 
-#### Products
+### Products
 
-| Function | Request Type | URL
-|----------|--------------| --- |
-| Index | GET |`/api/products`
-| Show | GET |`/api/products/:id`
-| Create | POST |`/api/products`
-| Delete | DELETE | `/api/products/:id`
-| Top 5 most popular products [OPTIONAL] | GET |
-| Products by Category [OPTIONAL] | GET |
+| Method | Request Type | URL | Token required |
+|--------|--------------| --- | -------------- |
+| Index | GET |`/api/products` | false |
+| Show | GET |`/api/products/:id` | false |
+| Create | POST |`/api/products` | **true** |
+| Delete | DELETE | `/api/products/:id` | **true** |
+| Top 5 most popular products [OPTIONAL] | GET | | false // orders count products limit 5
+| Products by Category [OPTIONAL] | GET | | false // where category = CAT
 
-#### Users
+### Users
 
-- Index [token required]
-- Show [token required]
-- Create [token required]
+| Method | Request Type | URL | Token required |
+|--------|--------------| --- | -------------- |
+| Index | GET |`/api/users` | **true**
+| Show | GET |`/api/users/:id` | **true**
+| Create | POST |`/api/users` | **true**
+| Delete | DELETE | `/api/users/:id` | **true**
 
-#### Orders
+### Orders
 
 - Current Order by user (args: user id)[token required]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
+| Method | Request Type | URL | Token required |
+|--------|--------------| --- | -------------- |
+| show | GET |`/api/orders/:id/users/:id` | **true**
+| complete | GET |`/api/users/:id/users/:id/complete` | **true**
+
+
 ## Data Shapes
 
-#### Product
+### Product
 
 - id
 - name
 - price
 - [OPTIONAL] category
 
-#### User
+### User
 
 - id
 - firstName
 - lastName
 - password
 
-#### Orders
+### Orders
 
 - id
 - id of each product in the order
@@ -56,3 +65,32 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 - user_id
 - status of order (active or complete)
 
+Data Schema
+
+`````sql
+CREATE Table products(
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(30), 
+    price numeric,
+    category VARCHAR(30)
+);
+
+CREATE Table users(
+     id SERIAL PRIMARY KEY,
+     firstName VARCHAR(30),
+     lastName VARCHAR(30),
+     password VARCHAR(30)
+);
+
+CREATE Table orders(
+    id SERIAL PRIMARY KEY,
+    user_id VARCHAR(30),
+    completed boolean
+);
+
+CREATE TABLE orders_products(
+    quantity int,
+    order_id bigint REFERENCES orders(id),
+    product_id bigint REFERENCES products(id)
+)
+`````
