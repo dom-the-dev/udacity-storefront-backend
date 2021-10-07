@@ -62,6 +62,6 @@ Description
 
 ### Scripts
 
-`db-migrate create`
+`db-migrate create {NAME} --sql-files `
 `db-migrate up`
 `db-migrate down`
