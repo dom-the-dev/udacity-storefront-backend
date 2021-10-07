@@ -84,13 +84,16 @@ CREATE Table users(
 
 CREATE Table orders(
     id SERIAL PRIMARY KEY,
-    user_id bigint REFERENCES users(id),
-    completed boolean
+    user_id bigint,
+    completed boolean,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE orders_products(
     quantity int,
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id)
+    order_id bigint, 
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    product_id bigint, 
+    FOREIGN KEY (product_id) REFERENCES products(id)
 )
 `````
