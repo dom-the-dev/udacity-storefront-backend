@@ -84,7 +84,7 @@ CREATE Table users(
 
 CREATE Table orders(
     id SERIAL PRIMARY KEY,
-    user_id VARCHAR(30),
+    user_id bigint REFERENCES users(id),
     completed boolean
 );
 
