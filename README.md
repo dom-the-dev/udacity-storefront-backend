@@ -1,16 +1,10 @@
 # Storefront Backend Project
 
-## Getting Started
-
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
 
 ## Required Technologies
 Your application must make use of the following libraries:
 - Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
 - db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
 
 ## Steps to Completion
@@ -52,3 +46,17 @@ Add JWT functionality as shown in the course. Make sure that JWTs are required f
 Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
 
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+
+
+
+
+
+
+
+
+
+# Storefront Backend Project
+### Project #2 - Full Stack JavaScript Developer Nanodegree
+
+Description
+
