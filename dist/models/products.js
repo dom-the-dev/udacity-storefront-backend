@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 exports.ProductStore = void 0;
-// @ts-ignore
 var database_1 = __importDefault(require("../database"));
 var ProductStore = /** @class */ (function () {
     function ProductStore() {

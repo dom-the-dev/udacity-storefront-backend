@@ -68,15 +68,17 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var order, newOrder;
+    var products, order_completed, user_id, order, newOrder;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                products = req.body.products;
+                order_completed = req.body.order_completed;
+                user_id = req.body.user_id;
                 order = {
-                    product_id: 1,
-                    quantity: 1,
-                    user_id: 1,
-                    order_completed: false
+                    user_id: user_id,
+                    products: products,
+                    order_completed: order_completed
                 };
                 return [4 /*yield*/, store.create(order)];
             case 1:
@@ -86,14 +88,26 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var deleted;
+var showCurrentUserOrders = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store["delete"](req.params.id)];
+            case 0: return [4 /*yield*/, store.showCurrentUserOrders(req.params.id)];
             case 1:
-                deleted = _a.sent();
-                res.json(deleted);
+                orders = _a.sent();
+                res.json(orders);
+                return [2 /*return*/];
+        }
+    });
+}); };
+var showCompletedUserOrders = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var orders;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, store.showCompletedUserOrders(req.params.id)];
+            case 1:
+                orders = _a.sent();
+                res.json(orders);
                 return [2 /*return*/];
         }
     });
@@ -101,5 +115,6 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
 router.route("/").get(index);
 router.route("/:id").get(show);
 router.route("/").post(create);
-router.route("/:id")["delete"](destroy);
+router.route("/user/:id").get(showCurrentUserOrders);
+router.route("/user/:id/completed").get(showCompletedUserOrders);
 exports["default"] = router;

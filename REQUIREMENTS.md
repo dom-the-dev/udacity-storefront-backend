@@ -32,13 +32,13 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 
 ### Orders
 
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
-
 | Method | Request Type | URL | Token required |
 |--------|--------------| --- | -------------- |
-| show | GET |`/api/orders/:id/users/:id` | **true**
-| complete | GET |`/api/users/:id/users/:id/complete` | **true**
+| Index | GET |`/api/orders` | **true**
+| Show | GET |`/api/orders/:id` | **true**
+| Create | GET |`/api/orders` | **true**
+| showCurrentByUserId | GET |`/api/orders/user/:id` | **true**
+| showCompletedByUserId | GET |`/api/orders/user/:id/complete` | **true**
 
 
 ## Data Shapes
@@ -60,10 +60,9 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 ### Orders
 
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
+- array of products with id and quantity
 
 Data Schema
 

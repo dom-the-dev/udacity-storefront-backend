@@ -16,25 +16,34 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
 
+    const products = req.body.products
+    const order_completed = req.body.order_completed
+    const user_id = req.body.user_id
+
     const order: Order = {
-        product_id: 1,
-        quantity: 1,
-        user_id: 1,
-        order_completed: false
+        user_id,
+        products,
+        order_completed
     };
 
     const newOrder = await store.create(order);
     res.json(newOrder);
 };
 
-const destroy = async (req: Request, res: Response) => {
-    const deleted = await store.delete(req.params.id);
-    res.json(deleted);
+const showCurrentUserOrders = async (req: Request, res: Response) => {
+    const orders = await store.showCurrentUserOrders(req.params.id);
+    res.json(orders);
+};
+
+const showCompletedUserOrders = async (req: Request, res: Response) => {
+    const orders = await store.showCompletedUserOrders(req.params.id);
+    res.json(orders);
 };
 
 router.route("/").get(index);
 router.route("/:id").get(show);
 router.route("/").post(create);
-router.route("/:id").delete(destroy);
+router.route("/user/:id").get(showCurrentUserOrders);
+router.route("/user/:id/completed").get(showCompletedUserOrders);
 
 export default router;

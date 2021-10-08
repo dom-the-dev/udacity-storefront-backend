@@ -35,37 +35,147 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.OrderStore = void 0;
-var dummy_order = { id: 1, product_id: 1, quantity: 20, user_id: 1, order_completed: false };
+var database_1 = __importDefault(require("../database"));
 var OrderStore = /** @class */ (function () {
     function OrderStore() {
     }
     OrderStore.prototype.index = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, err_1;
             return __generator(this, function (_a) {
-                return [2 /*return*/, [dummy_order]];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = "SELECT * FROM orders";
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_1 = _a.sent();
+                        throw new Error("Could not get orders. Error: " + err_1);
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
     OrderStore.prototype.show = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_2;
             return __generator(this, function (_a) {
-                return [2 /*return*/, dummy_order];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = "SELECT * FROM orders WHERE id=($1)";
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_2 = _a.sent();
+                        throw new Error("Could not find order " + id + ". Error: " + err_2);
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
-    OrderStore.prototype.create = function (u) {
+    OrderStore.prototype.create = function (o) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, dummy_order];
+            var sql, conn, result, order, _i, _a, product, sql_1, err_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 7, , 8]);
+                        sql = "INSERT INTO orders (user_id, completed) VALUES($1, $2) RETURNING *";
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _b.sent();
+                        return [4 /*yield*/, conn.query(sql, [o.user_id, o.order_completed])];
+                    case 2:
+                        result = _b.sent();
+                        order = result.rows[0];
+                        _i = 0, _a = o.products;
+                        _b.label = 3;
+                    case 3:
+                        if (!(_i < _a.length)) return [3 /*break*/, 6];
+                        product = _a[_i];
+                        sql_1 = "INSERT INTO orders_products (product_id, order_id, quantity) VALUES($1, $2, $3) RETURNING *";
+                        return [4 /*yield*/, conn.query(sql_1, [product.product_id, order.id, product.quantity])];
+                    case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5:
+                        _i++;
+                        return [3 /*break*/, 3];
+                    case 6:
+                        conn.release();
+                        return [2 /*return*/, order];
+                    case 7:
+                        err_3 = _b.sent();
+                        throw new Error("Could not create new order. Error: " + err_3);
+                    case 8: return [2 /*return*/];
+                }
             });
         });
     };
-    OrderStore.prototype["delete"] = function (id) {
+    OrderStore.prototype.showCurrentUserOrders = function (user_id) {
         return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_4;
             return __generator(this, function (_a) {
-                return [2 /*return*/, dummy_order];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=false";
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [user_id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not get orders. Error: " + err_4);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OrderStore.prototype.showCompletedUserOrders = function (user_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=true";
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [user_id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_5 = _a.sent();
+                        throw new Error("Could not get orders. Error: " + err_5);
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };

@@ -1,4 +1,3 @@
-// @ts-ignore
 import Client from "../database";
 import {hashPassword} from "../helpers/hashPassword";
 
@@ -12,7 +11,6 @@ export type User = {
 export class UserStore {
     async index(): Promise<User[]> {
         try {
-            // @ts-ignore
             const conn = await Client.connect();
             const sql = "SELECT * FROM users";
 
@@ -28,7 +26,6 @@ export class UserStore {
 
     async show(id: string): Promise<User> {
         try {
-            // @ts-ignore
             const conn = await Client.connect();
             const sql = "SELECT * FROM users WHERE id=($1)";
 
@@ -46,7 +43,6 @@ export class UserStore {
 
     async create(u: User): Promise<User> {
         try {
-            // @ts-ignore
             const conn = await Client.connect();
 
             const sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
@@ -69,7 +65,6 @@ export class UserStore {
     async delete(id: string): Promise<string> {
         try {
             const sql = "DELETE FROM users WHERE id=($1)";
-            // @ts-ignore
             const conn = await Client.connect();
 
             await conn.query(sql, [id]);

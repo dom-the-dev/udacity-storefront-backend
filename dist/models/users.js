@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 exports.UserStore = void 0;
-// @ts-ignore
 var database_1 = __importDefault(require("../database"));
 var hashPassword_1 = require("../helpers/hashPassword");
 var UserStore = /** @class */ (function () {
