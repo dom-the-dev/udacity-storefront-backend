@@ -32,6 +32,14 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 # Storefront Backend Project
 ### Project #2 - Full Stack JavaScript Developer Nanodegree
 
+#### Getting started
+- `git clone https://github.com/dom-the-dev/udacity-storefront-backend.git`
+- `cd udacity-storefront-backend`
+- `cp .env.dist .env`
+- Adjust environment variables
+- run `yarn` to install all dependencies
+- run `db-migrate up` 
+
 Description
 
 ### Scripts
@@ -39,3 +47,4 @@ Description
 `db-migrate create {NAME} --sql-files `
 `db-migrate up`
 `db-migrate down`
+
