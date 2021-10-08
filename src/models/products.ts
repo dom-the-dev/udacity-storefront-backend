@@ -1,7 +1,7 @@
 // @ts-ignore
 import Client from '../database'
 
-export type Products = {
+export type Product = {
     id?: number;
     name: string;
     price: string;
@@ -9,7 +9,7 @@ export type Products = {
 }
 
 export class ProductStore {
-    async index(): Promise<Products[]> {
+    async index(): Promise<Product[]> {
         try {
             // @ts-ignore
             const conn = await Client.connect()
@@ -25,7 +25,7 @@ export class ProductStore {
         }
     }
 
-    async show(id: string): Promise<Products> {
+    async show(id: string): Promise<Product> {
         try {
             const sql = 'SELECT * FROM products WHERE id=($1)'
             // @ts-ignore
@@ -41,7 +41,7 @@ export class ProductStore {
         }
     }
 
-    async create(p: Products): Promise<Products> {
+    async create(p: Product): Promise<Product> {
         try {
             const sql = 'INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *'
             // @ts-ignore
@@ -60,19 +60,17 @@ export class ProductStore {
         }
     }
 
-    async delete(id: string): Promise<Products> {
+    async delete(id: string): Promise<string> {
         try {
             const sql = 'DELETE FROM products WHERE id=($1)'
             // @ts-ignore
             const conn = await Client.connect()
 
-            const result = await conn.query(sql, [id])
-
-            const product = result.rows[0]
+            await conn.query(sql, [id])
 
             conn.release()
 
-            return product
+            return "Product successfully deleted"
 
         } catch (err) {
             throw new Error(`Could not delete product ${id}. Error: ${err}`)

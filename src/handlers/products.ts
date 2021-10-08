@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express"
-import {Products, ProductStore} from '../models/products'
+import {Product, ProductStore} from '../models/products'
 
 const router = express.Router()
 const store = new ProductStore()
@@ -17,7 +17,7 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
 
-    const product: Products = {
+    const product: Product = {
         name: req.body.name,
         price: req.body.price,
         category: req.body.category
@@ -29,7 +29,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy  = async (req: Request, res: Response) => {
     const deleted = await store.delete(req.params.id)
-    res.json(deleted)
+    res.json({message: deleted})
 }
 
 router.route('/').get(index)
