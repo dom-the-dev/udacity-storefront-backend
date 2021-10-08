@@ -18,8 +18,8 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 | Show | GET |`/api/products/:id` | false |
 | Create | POST |`/api/products` | **true** |
 | Delete | DELETE | `/api/products/:id` | **true** |
-| Top 5 most popular products [OPTIONAL] | GET | | false // orders count products limit 5
-| Products by Category [OPTIONAL] | GET | | false // where category = CAT
+| Top 5 most popular products [OPTIONAL] | GET | TODO | false // orders count products limit 5
+| Products by Category | GET | `/api/products/category/:category` | false
 
 ### Users
 
@@ -77,9 +77,9 @@ CREATE Table products(
 
 CREATE Table users(
      id SERIAL PRIMARY KEY,
-     firstName VARCHAR(30),
-     lastName VARCHAR(30),
-     password VARCHAR(30)
+     firstname VARCHAR(30),
+     lastname VARCHAR(30),
+     password VARCHAR(255)
 );
 
 CREATE Table orders(

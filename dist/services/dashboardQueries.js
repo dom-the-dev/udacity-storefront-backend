@@ -39,66 +39,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
-var users_1 = require("../models/users");
-var router = express_1["default"].Router();
-var store = new users_1.UserStore();
-var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, store.index()];
-            case 1:
-                users = _a.sent();
-                res.json(users);
-                return [2 /*return*/];
-        }
-    });
-}); };
-var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, store.show(req.params.id)];
-            case 1:
-                user = _a.sent();
-                res.json(user);
-                return [2 /*return*/];
-        }
-    });
-}); };
-var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, newUser;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                user = {
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    password: req.body.password
-                };
-                return [4 /*yield*/, store.create(user)];
-            case 1:
-                newUser = _a.sent();
-                res.json(newUser);
-                return [2 /*return*/];
-        }
-    });
-}); };
-var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var deleted;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, store["delete"](req.params.id)];
-            case 1:
-                deleted = _a.sent();
-                res.json(deleted);
-                return [2 /*return*/];
-        }
-    });
-}); };
-router.route("/").get(index);
-router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/:id")["delete"](destroy);
-exports["default"] = router;
+exports.DashboardQueries = void 0;
+var database_1 = __importDefault(require("../database"));
+var DashboardQueries = /** @class */ (function () {
+    function DashboardQueries() {
+    }
+    // Get all products from a specific category
+    DashboardQueries.prototype.productsByCategory = function (category) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = 'SELECT * FROM products WHERE category=($1)';
+                        return [4 /*yield*/, conn.query(sql, [category])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_1 = _a.sent();
+                        throw new Error("Can't get products for category " + category + ": " + err_1);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return DashboardQueries;
+}());
+exports.DashboardQueries = DashboardQueries;

@@ -1,8 +1,10 @@
 import express, {Request, Response} from "express";
 import {Product, ProductStore} from "../models/products";
+import {DashboardQueries} from "../services/dashboardQueries";
 
 const router = express.Router();
 const store = new ProductStore();
+const dashboard = new DashboardQueries();
 
 
 const index = async (_req: Request, res: Response) => {
@@ -27,14 +29,20 @@ const create = async (req: Request, res: Response) => {
     res.json(newProduct);
 };
 
-const destroy  = async (req: Request, res: Response) => {
+const destroy = async (req: Request, res: Response) => {
     const deleted = await store.delete(req.params.id);
     res.json({message: deleted});
+};
+
+const productsByCategory = async (req: Request, res: Response) => {
+    const products = await dashboard.productsByCategory(req.params.category);
+    res.json(products);
 };
 
 router.route("/").get(index);
 router.route("/:id").get(show);
 router.route("/").post(create);
 router.route("/:id").delete(destroy);
+router.route("/category/:category").get(productsByCategory);
 
 export default router;

@@ -1,14 +1,13 @@
 // @ts-ignore
 import Client from "../database";
+import {hashPassword} from "../helpers/hashPassword";
 
 export type User = {
     id?: number,
-    firstName: string,
-    lastName: string,
+    firstname: string,
+    lastname: string,
     password: string
 }
-
-const dummy_user = {id: 1, firstName: "Dominik", lastName: "Amrugiewicz", password: "123456"};
 
 export class UserStore {
     async index(): Promise<User[]> {
@@ -28,16 +27,59 @@ export class UserStore {
     }
 
     async show(id: string): Promise<User> {
-        return dummy_user;
+        try {
+            // @ts-ignore
+            const conn = await Client.connect();
+            const sql = "SELECT * FROM users WHERE id=($1)";
+
+            const result = await conn.query(sql, [id]);
+
+            conn.release();
+
+            return result.rows[0];
+
+        } catch (err) {
+            throw new Error(`Could not get user. Error: ${err}`);
+        }
+
     }
 
     async create(u: User): Promise<User> {
+        try {
+            // @ts-ignore
+            const conn = await Client.connect();
 
-        return dummy_user;
+            const sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
+
+            const hash = hashPassword(u.password)
+
+            const result = await conn.query(sql, [u.firstname, u.lastname, hash]);
+
+            conn.release();
+
+            return result.rows[0];
+
+        } catch (err) {
+            throw new Error(`Could not create user. Error: ${err}`);
+        }
+
+
     }
 
-    async delete(id: string): Promise<User> {
+    async delete(id: string): Promise<string> {
+        try {
+            const sql = "DELETE FROM users WHERE id=($1)";
+            // @ts-ignore
+            const conn = await Client.connect();
 
-        return dummy_user;
+            await conn.query(sql, [id]);
+
+            conn.release();
+
+            return "User successfully deleted";
+
+        } catch (err) {
+            throw new Error(`Could not delete product ${id}. Error: ${err}`);
+        }
     }
 }

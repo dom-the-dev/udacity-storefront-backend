@@ -41,8 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var products_1 = require("../models/products");
+var dashboardQueries_1 = require("../services/dashboardQueries");
 var router = express_1["default"].Router();
 var store = new products_1.ProductStore();
+var dashboard = new dashboardQueries_1.DashboardQueries();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products;
     return __generator(this, function (_a) {
@@ -92,13 +94,26 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
             case 0: return [4 /*yield*/, store["delete"](req.params.id)];
             case 1:
                 deleted = _a.sent();
-                res.json(deleted);
+                res.json({ message: deleted });
                 return [2 /*return*/];
         }
     });
 }); };
-router.route('/').get(index);
-router.route('/:id').get(show);
-router.route('/').post(create);
-router.route('/:id')["delete"](destroy);
+var productsByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var products;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, dashboard.productsByCategory(req.params.category)];
+            case 1:
+                products = _a.sent();
+                res.json(products);
+                return [2 /*return*/];
+        }
+    });
+}); };
+router.route("/").get(index);
+router.route("/:id").get(show);
+router.route("/").post(create);
+router.route("/:id")["delete"](destroy);
+router.route("/category/:category").get(productsByCategory);
 exports["default"] = router;

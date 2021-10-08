@@ -98,8 +98,8 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
         }
     });
 }); };
-router.route('/').get(index);
-router.route('/:id').get(show);
-router.route('/').post(create);
-router.route('/:id')["delete"](destroy);
+router.route("/").get(index);
+router.route("/:id").get(show);
+router.route("/").post(create);
+router.route("/:id")["delete"](destroy);
 exports["default"] = router;
