@@ -107,7 +107,11 @@ example request body:
 - id
 - user_id
 - status of order (completed true or false)
-- array of products with id and quantity
+
+### OrdersProducts
+- order_id references to the order 
+- product_id refernces to the product
+- product quantity 
 
 ## Data Schema
 
