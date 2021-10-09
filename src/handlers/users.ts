@@ -42,7 +42,7 @@ const login = async (req: Request, res: Response) => {
 router.route("/login").post(login);
 router.route("/").get(authenticate, index);
 router.route("/:id").get(authenticate, show);
-router.route("/").post(authenticate, create);
+router.route("/").post(create);
 router.route("/:id").delete(authenticate, destroy);
 
 export default router;
