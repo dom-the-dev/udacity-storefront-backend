@@ -58,13 +58,13 @@ TOKEN_SECRET=safe-for-token
 }
 ````
 
-## Development
+## Available scripts
+
+### Start Development Server
 - run `yarn watch` to start development server
 
-## Testing
+### Run all Tests
 - run `yarn test` to run all tests
-
-## Available scripts
 
 - `yarn watch`
 - `yarn test`
