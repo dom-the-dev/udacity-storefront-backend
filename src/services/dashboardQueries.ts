@@ -1,4 +1,4 @@
-import Client from '../database'
+import Client from "../database";
 import {Product} from "../models/products";
 
 export class DashboardQueries {
@@ -6,16 +6,16 @@ export class DashboardQueries {
     async productsByCategory(category: string): Promise<Product[]> {
 
         try {
-            const conn = await Client.connect()
-            const sql = 'SELECT * FROM products WHERE category=($1)'
+            const conn = await Client.connect();
+            const sql = "SELECT * FROM products WHERE category=($1)";
 
-            const result = await conn.query(sql, [category])
+            const result = await conn.query(sql, [category]);
 
-            conn.release()
+            conn.release();
 
-            return result.rows
+            return result.rows;
         } catch (err) {
-            throw new Error(`Can't get products for category ${category}: ${err}`)
+            throw new Error(`Can't get products for category ${category}: ${err}`);
         }
     }
 

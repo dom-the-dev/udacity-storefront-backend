@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {Product, ProductStore} from "../models/products";
+import {ProductPrototype, ProductStore} from "../models/products";
 import {DashboardQueries} from "../services/dashboardQueries";
 
 const router = express.Router();
@@ -13,13 +13,13 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-    const product = await store.show(req.params.id);
+    const product = await store.show(parseInt(req.params.id));
     res.json(product);
 };
 
 const create = async (req: Request, res: Response) => {
 
-    const product: Product = {
+    const product: ProductPrototype = {
         name: req.body.name,
         price: req.body.price,
         category: req.body.category
@@ -30,7 +30,7 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-    const deleted = await store.delete(req.params.id);
+    const deleted = await store.delete(parseInt(req.params.id));
     res.json({message: deleted});
 };
 

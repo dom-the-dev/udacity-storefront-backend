@@ -59,7 +59,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     var order;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.show(req.params.id)];
+            case 0: return [4 /*yield*/, store.show(parseInt(req.params.id))];
             case 1:
                 order = _a.sent();
                 res.json(order);
@@ -92,7 +92,7 @@ var showCurrentUserOrders = function (req, res) { return __awaiter(void 0, void 
     var orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.showCurrentUserOrders(req.params.id)];
+            case 0: return [4 /*yield*/, store.showCurrentUserOrders(parseInt(req.params.id))];
             case 1:
                 orders = _a.sent();
                 res.json(orders);
@@ -104,7 +104,7 @@ var showCompletedUserOrders = function (req, res) { return __awaiter(void 0, voi
     var orders;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.showCompletedUserOrders(req.params.id)];
+            case 0: return [4 /*yield*/, store.showCompletedUserOrders(parseInt(req.params.id))];
             case 1:
                 orders = _a.sent();
                 res.json(orders);

@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {User, UserStore} from "../models/users";
+import {UserPrototype, UserStore} from "../models/users";
 
 const router = express.Router();
 const store = new UserStore();
@@ -10,13 +10,13 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-    const user = await store.show(req.params.id);
+    const user = await store.show(parseInt(req.params.id));
     res.json(user);
 };
 
 const create = async (req: Request, res: Response) => {
 
-    const user: User = {
+    const user: UserPrototype = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         password: req.body.password
@@ -27,7 +27,7 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-    const deleted = await store.delete(req.params.id);
+    const deleted = await store.delete(parseInt(req.params.id));
     res.json(deleted);
 };
 

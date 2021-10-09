@@ -53,7 +53,7 @@ export class UserStore {
 
             const sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
 
-            const hash = hashPassword(u.password)
+            const hash = hashPassword(u.password);
 
             const result = await conn.query(sql, [u.firstname, u.lastname, hash]);
 

@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {Order, OrderStore} from "../models/orders";
+import {OrderPrototype, OrderStore} from "../models/orders";
 
 const router = express.Router();
 const store = new OrderStore();
@@ -10,17 +10,17 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-    const order = await store.show(req.params.id);
+    const order = await store.show(parseInt(req.params.id));
     res.json(order);
 };
 
 const create = async (req: Request, res: Response) => {
 
-    const products = req.body.products
-    const order_completed = req.body.order_completed
-    const user_id = req.body.user_id
+    const products = req.body.products;
+    const order_completed = req.body.order_completed;
+    const user_id = req.body.user_id;
 
-    const order: Order = {
+    const order: OrderPrototype = {
         user_id,
         products,
         order_completed
@@ -31,12 +31,12 @@ const create = async (req: Request, res: Response) => {
 };
 
 const showCurrentUserOrders = async (req: Request, res: Response) => {
-    const orders = await store.showCurrentUserOrders(req.params.id);
+    const orders = await store.showCurrentUserOrders(parseInt(req.params.id));
     res.json(orders);
 };
 
 const showCompletedUserOrders = async (req: Request, res: Response) => {
-    const orders = await store.showCompletedUserOrders(req.params.id);
+    const orders = await store.showCompletedUserOrders(parseInt(req.params.id));
     res.json(orders);
 };
 

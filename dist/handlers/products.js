@@ -61,7 +61,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     var product;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.show(req.params.id)];
+            case 0: return [4 /*yield*/, store.show(parseInt(req.params.id))];
             case 1:
                 product = _a.sent();
                 res.json(product);
@@ -91,7 +91,7 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     var deleted;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store["delete"](req.params.id)];
+            case 0: return [4 /*yield*/, store["delete"](parseInt(req.params.id))];
             case 1:
                 deleted = _a.sent();
                 res.json({ message: deleted });

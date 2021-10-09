@@ -56,7 +56,7 @@ export class OrderStore {
             const conn = await Client.connect();
 
             const result = await conn.query(sql, [o.user_id, o.order_completed]);
-            const order = result.rows[0]
+            const order = result.rows[0];
 
             // second add to order_products
             for(const product of o.products) {
@@ -74,7 +74,7 @@ export class OrderStore {
 
     async showCurrentUserOrders(user_id: number): Promise<Order[]> {
         try {
-            const sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=false";
+            const sql = "SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1";
             const conn = await Client.connect();
 
             const result = await conn.query(sql, [user_id]);

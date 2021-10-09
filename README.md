@@ -1,11 +1,4 @@
-
-### 3. Models
-
-Create the models for each database table. 
-
 The methods in each model should map to the endpoints in `REQUIREMENTS.md`. 
-
-Models should all have test suites and mocks.
 
 ### 4. Express Handlers
 

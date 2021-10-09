@@ -16,10 +16,10 @@ describe("Order Model", () => {
             "firstname": "Dominik",
             "lastname": "Amrugiewicz",
             "password": "password"
-        })
+        });
 
-        product = await productStore.create({name: "Product", price: "19.00", category: "Shoes"})
-    })
+        product = await productStore.create({name: "Product", price: "19.00", category: "Shoes"});
+    });
 
     it("should have an index method", () => {
         expect(store.index).toBeDefined();
@@ -42,12 +42,12 @@ describe("Order Model", () => {
             order_completed: false
         });
 
-        expect(result.id).toEqual(1)
+        expect(result.id).toEqual(1);
     });
 
     afterAll(async () => {
-        await userStore.delete(user.id)
-        await productStore.delete(product.id)
-    })
+        await userStore.delete(user.id);
+        await productStore.delete(product.id);
+    });
 
 });

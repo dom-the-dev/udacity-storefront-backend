@@ -138,7 +138,7 @@ var OrderStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=false";
+                        sql = "SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1";
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
