@@ -115,6 +115,6 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
 router.route("/login").post(login);
 router.route("/").get(authMiddleware_1.authenticate, index);
 router.route("/:id").get(authMiddleware_1.authenticate, show);
-router.route("/").post(authMiddleware_1.authenticate, create);
+router.route("/").post(create);
 router.route("/:id")["delete"](authMiddleware_1.authenticate, destroy);
 exports["default"] = router;

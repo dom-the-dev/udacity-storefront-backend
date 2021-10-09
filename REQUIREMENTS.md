@@ -20,6 +20,16 @@ Different to the requirements create user endpoint is not token required for bet
 | Top 5 most popular products [OPTIONAL] | GET | TODO | false // orders count products limit 5
 | Products by Category | GET | `/api/products/category/:category` | false
 
+#### Create `POST /api/products`
+example request body:
+````JSON
+{
+  "name": "Product Name",
+  "price": "99.99",
+  "category": "Category Name"
+}
+````
+
 ### Users
 
 | Method | Request Type | URL | Token required |
@@ -30,6 +40,26 @@ Different to the requirements create user endpoint is not token required for bet
 | Delete | DELETE | `/api/users/:id` | **true**
 | Login | GET | `/api/users/login` | **false**
 
+#### Create `POST /api/users`
+example request body:
+````JSON
+{
+  "firstname": "User",
+  "lastname": "Name",
+  "password": "safe"
+}
+````
+
+#### Login `POST /api/users/login`
+example request body:
+````JSON
+{
+  "firstname": "User",
+  "lastname": "Name",
+  "password": "safe"
+}
+````
+
 ### Orders
 
 | Method | Request Type | URL | Token required |
@@ -39,6 +69,21 @@ Different to the requirements create user endpoint is not token required for bet
 | Create | GET |`/api/orders` | **true**
 | showCurrentByUserId | GET |`/api/orders/user/:id` | **true**
 | showCompletedByUserId | GET |`/api/orders/user/:id/complete` | **true**
+
+#### Create `POST /api/orders/`
+example request body:
+````JSON
+{
+  "products": [
+    {
+      "product_id": 1,
+      "quantity": 1
+    },
+  ],
+  "order_completed": false,
+  "user_id": 1
+}
+````
 
 
 ## Data Shapes
