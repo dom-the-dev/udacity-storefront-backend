@@ -1,16 +1,16 @@
-import {UserStore} from "../users";
+import {User, UserPrototype, UserStore} from "../users";
 
 const store = new UserStore();
 
-const password = "safe-password"
-const dummyUser = {
-    "id": 1,
+const dummyUser: UserPrototype = {
     "firstname": "Dominik",
     "lastname": "Amrugiewicz",
-    "password": password
+    "password": "safe-password"
 }
 
 describe("User Model", () => {
+    let user: User;
+
     it("should have an index method", () => {
         expect(store.index).toBeDefined();
     });
@@ -21,23 +21,31 @@ describe("User Model", () => {
     });
 
     it("create method should create a user", async () => {
-
         const newUser = await store.create(dummyUser);
 
         expect(newUser.firstname).toEqual("Dominik")
         expect(newUser.lastname).toEqual("Amrugiewicz")
+
+        await store.delete(newUser.id)
     });
 
     it("should return one user", async () => {
-        await store.create(dummyUser);
-        const user = await store.show("1");
+        user = await store.create(dummyUser);
 
-        expect(user.firstname).toEqual("Dominik")
-        expect(user.lastname).toEqual("Amrugiewicz")
+        const showUser = await store.show(user.id);
+
+        expect(showUser.firstname).toEqual("Dominik")
+        expect(showUser.lastname).toEqual("Amrugiewicz")
+
+        await store.delete(user.id)
     })
 
     it("delete method delete a user", async () => {
-        const result = await store.delete("1");
+        user = await store.create(dummyUser);
+
+        const result = await store.delete(user.id);
         expect(result).toEqual("User successfully deleted");
+
+        await store.delete(user.id)
     });
 });

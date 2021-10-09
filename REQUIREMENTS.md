@@ -61,7 +61,7 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 
 - id
 - user_id
-- status of order (active or complete)
+- status of order (completed true or false)
 - array of products with id and quantity
 
 Data Schema

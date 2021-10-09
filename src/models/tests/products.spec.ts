@@ -14,11 +14,11 @@ describe("Product Model", () => {
 
     it("create method should create a product", async () => {
         const result = await store.create({name: "Product", price: "19.00", category: "Shoes"});
-        expect(result).toEqual({id: 1, name: "Product", price: "19.00", category: "Shoes"});
+        expect(result).toEqual(jasmine.objectContaining({name: "Product", price: "19.00", category: "Shoes"}));
     });
 
     it("delete method delete a product", async () => {
-        const result = await store.delete("1");
+        const result = await store.delete(1);
         expect(result).toEqual("Product successfully deleted");
     });
 });

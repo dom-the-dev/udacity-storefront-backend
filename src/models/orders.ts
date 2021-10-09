@@ -5,8 +5,14 @@ export type OrderProduct = {
     quantity: number,
 }
 
+export type OrderPrototype = {
+    products: OrderProduct[],
+    user_id: number
+    order_completed: boolean
+}
+
 export type Order = {
-    id?: number,
+    id: number,
     products: OrderProduct[],
     user_id: number
     order_completed: boolean
@@ -28,7 +34,7 @@ export class OrderStore {
         }
     }
 
-    async show(id: string): Promise<Order> {
+    async show(id: number): Promise<Order> {
         try {
             const sql = "SELECT * FROM orders WHERE id=($1)";
             const conn = await Client.connect();
@@ -43,7 +49,7 @@ export class OrderStore {
         }
     }
 
-    async create(o: Order): Promise<Order> {
+    async create(o: OrderPrototype): Promise<Order> {
         try {
             // first create order
             const sql = "INSERT INTO orders (user_id, completed) VALUES($1, $2) RETURNING *";
@@ -66,7 +72,7 @@ export class OrderStore {
         }
     }
 
-    async showCurrentUserOrders(user_id: string): Promise<Order[]> {
+    async showCurrentUserOrders(user_id: number): Promise<Order[]> {
         try {
             const sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=false";
             const conn = await Client.connect();
@@ -81,9 +87,9 @@ export class OrderStore {
         }
     }
 
-    async showCompletedUserOrders(user_id: string): Promise<Order[]> {
+    async showCompletedUserOrders(user_id: number): Promise<Order[]> {
         try {
-            const sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=true";
+            const sql = "SELECT * FROM orders WHERE user_id=($1) AND completed=false";
             const conn = await Client.connect();
 
             const result = await conn.query(sql, [user_id]);

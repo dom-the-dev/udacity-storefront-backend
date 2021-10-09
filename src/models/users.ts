@@ -1,8 +1,14 @@
 import Client from "../database";
 import {hashPassword} from "../helpers/hashPassword";
 
+export type UserPrototype = {
+    firstname: string,
+    lastname: string,
+    password: string
+}
+
 export type User = {
-    id?: number,
+    id: number,
     firstname: string,
     lastname: string,
     password: string
@@ -24,7 +30,7 @@ export class UserStore {
         }
     }
 
-    async show(id: string): Promise<User> {
+    async show(id: number): Promise<User> {
         try {
             const conn = await Client.connect();
             const sql = "SELECT * FROM users WHERE id=($1)";
@@ -41,7 +47,7 @@ export class UserStore {
 
     }
 
-    async create(u: User): Promise<User> {
+    async create(u: UserPrototype): Promise<User> {
         try {
             const conn = await Client.connect();
 
@@ -62,7 +68,7 @@ export class UserStore {
 
     }
 
-    async delete(id: string): Promise<string> {
+    async delete(id: number): Promise<string> {
         try {
             const sql = "DELETE FROM users WHERE id=($1)";
             const conn = await Client.connect();

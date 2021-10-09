@@ -1,7 +1,13 @@
 import Client from "../database";
 
+export type ProductPrototype = {
+    name: string;
+    price: string;
+    category?: string;
+}
+
 export type Product = {
-    id?: number;
+    id: number;
     name: string;
     price: string;
     category?: string;
@@ -23,7 +29,7 @@ export class ProductStore {
         }
     }
 
-    async show(id: string): Promise<Product> {
+    async show(id: number): Promise<Product> {
         try {
             const sql = "SELECT * FROM products WHERE id=($1)";
             const conn = await Client.connect();
@@ -38,7 +44,7 @@ export class ProductStore {
         }
     }
 
-    async create(p: Product): Promise<Product> {
+    async create(p: ProductPrototype): Promise<Product> {
         try {
             const sql = "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
             const conn = await Client.connect();
@@ -56,7 +62,7 @@ export class ProductStore {
         }
     }
 
-    async delete(id: string): Promise<string> {
+    async delete(id: number): Promise<string> {
         try {
             const sql = "DELETE FROM products WHERE id=($1)";
             const conn = await Client.connect();
