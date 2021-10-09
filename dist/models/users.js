@@ -41,7 +41,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.UserStore = void 0;
 var database_1 = __importDefault(require("../database"));
-var hashPassword_1 = require("../helpers/hashPassword");
+var passwordHelper_1 = require("../helpers/passwordHelper");
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1["default"].config();
+var TOKEN_SECRET = process.env.TOKEN_SECRET;
 var UserStore = /** @class */ (function () {
     function UserStore() {
     }
@@ -104,7 +108,7 @@ var UserStore = /** @class */ (function () {
                     case 1:
                         conn = _a.sent();
                         sql = "INSERT INTO users (firstname, lastname, password) VALUES ($1, $2, $3) RETURNING *";
-                        hash = (0, hashPassword_1.hashPassword)(u.password);
+                        hash = (0, passwordHelper_1.hashPassword)(u.password);
                         return [4 /*yield*/, conn.query(sql, [u.firstname, u.lastname, hash])];
                     case 2:
                         result = _a.sent();
@@ -138,6 +142,44 @@ var UserStore = /** @class */ (function () {
                         err_4 = _a.sent();
                         throw new Error("Could not delete product " + id + ". Error: " + err_4);
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserStore.prototype.login = function (firstname, lastname, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, user, _a, err_5;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 5, , 6]);
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _b.sent();
+                        sql = "SELECT * FROM users WHERE firstname=($1) AND lastname=($2)";
+                        return [4 /*yield*/, conn.query(sql, [firstname, lastname])];
+                    case 2:
+                        result = _b.sent();
+                        user = result.rows[0];
+                        _a = user;
+                        if (!_a) return [3 /*break*/, 4];
+                        return [4 /*yield*/, (0, passwordHelper_1.checkPassword)(password, user.password)];
+                    case 3:
+                        _a = (_b.sent());
+                        _b.label = 4;
+                    case 4:
+                        if (_a) {
+                            // @ts-ignore
+                            return [2 /*return*/, jsonwebtoken_1["default"].sign(user, TOKEN_SECRET)];
+                        }
+                        else {
+                            return [2 /*return*/, 'No user found'];
+                        }
+                        return [3 /*break*/, 6];
+                    case 5:
+                        err_5 = _b.sent();
+                        throw new Error('Could not get user');
+                    case 6: return [2 /*return*/];
                 }
             });
         });

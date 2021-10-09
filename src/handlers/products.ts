@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import {ProductPrototype, ProductStore} from "../models/products";
 import {DashboardQueries} from "../services/dashboardQueries";
+import {authenticate} from "../middleware/authMiddleware";
 
 const router = express.Router();
 const store = new ProductStore();
@@ -41,8 +42,8 @@ const productsByCategory = async (req: Request, res: Response) => {
 
 router.route("/").get(index);
 router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/:id").delete(destroy);
+router.route("/").post(authenticate, create);
+router.route("/:id").delete(authenticate, destroy);
 router.route("/category/:category").get(productsByCategory);
 
 export default router;

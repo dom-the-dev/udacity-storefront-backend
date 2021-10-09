@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var users_1 = require("../models/users");
+var authMiddleware_1 = require("../middleware/authMiddleware");
 var router = express_1["default"].Router();
 var store = new users_1.UserStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -97,8 +98,23 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
         }
     });
 }); };
-router.route("/").get(index);
-router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/:id")["delete"](destroy);
+var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, firstname, lastname, password, token;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, firstname = _a.firstname, lastname = _a.lastname, password = _a.password;
+                return [4 /*yield*/, store.login(firstname, lastname, password)];
+            case 1:
+                token = _b.sent();
+                res.json(token);
+                return [2 /*return*/];
+        }
+    });
+}); };
+router.route("/login").post(login);
+router.route("/").get(authMiddleware_1.authenticate, index);
+router.route("/:id").get(authMiddleware_1.authenticate, show);
+router.route("/").post(authMiddleware_1.authenticate, create);
+router.route("/:id")["delete"](authMiddleware_1.authenticate, destroy);
 exports["default"] = router;

@@ -42,6 +42,7 @@ exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var products_1 = require("../models/products");
 var dashboardQueries_1 = require("../services/dashboardQueries");
+var authMiddleware_1 = require("../middleware/authMiddleware");
 var router = express_1["default"].Router();
 var store = new products_1.ProductStore();
 var dashboard = new dashboardQueries_1.DashboardQueries();
@@ -113,7 +114,7 @@ var productsByCategory = function (req, res) { return __awaiter(void 0, void 0, 
 }); };
 router.route("/").get(index);
 router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/:id")["delete"](destroy);
+router.route("/").post(authMiddleware_1.authenticate, create);
+router.route("/:id")["delete"](authMiddleware_1.authenticate, destroy);
 router.route("/category/:category").get(productsByCategory);
 exports["default"] = router;

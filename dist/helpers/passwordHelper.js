@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a, _b;
 exports.__esModule = true;
-exports.hashPassword = void 0;
+exports.checkPassword = exports.hashPassword = void 0;
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1["default"].config();
@@ -14,3 +14,7 @@ var hashPassword = function (password) {
     return bcrypt_1["default"].hashSync(password + pepper, parseInt(saltRounds));
 };
 exports.hashPassword = hashPassword;
+var checkPassword = function (password, hashedPassword) {
+    return bcrypt_1["default"].compare(password + pepper, hashedPassword);
+};
+exports.checkPassword = checkPassword;

@@ -1,5 +1,6 @@
 import express, {Request, Response} from "express";
 import {OrderPrototype, OrderStore} from "../models/orders";
+import {authenticate} from "../middleware/authMiddleware";
 
 const router = express.Router();
 const store = new OrderStore();
@@ -40,10 +41,10 @@ const showCompletedUserOrders = async (req: Request, res: Response) => {
     res.json(orders);
 };
 
-router.route("/").get(index);
-router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/user/:id").get(showCurrentUserOrders);
-router.route("/user/:id/completed").get(showCompletedUserOrders);
+router.route("/").get(authenticate, index);
+router.route("/:id").get(authenticate, show);
+router.route("/").post(authenticate, create);
+router.route("/user/:id").get(authenticate, showCurrentUserOrders);
+router.route("/user/:id/completed").get(authenticate, showCompletedUserOrders);
 
 export default router;

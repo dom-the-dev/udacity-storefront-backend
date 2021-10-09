@@ -29,6 +29,7 @@ well as data shapes the frontend and backend have agreed meet the requirements o
 | Show | GET |`/api/users/:id` | **true**
 | Create | POST |`/api/users` | **true**
 | Delete | DELETE | `/api/users/:id` | **true**
+| Login | GET | `/api/users/login` | **false**
 
 ### Orders
 

@@ -1,5 +1,6 @@
 import express, {Request, Response} from "express";
 import {UserPrototype, UserStore} from "../models/users";
+import {authenticate} from "../middleware/authMiddleware";
 
 const router = express.Router();
 const store = new UserStore();
@@ -31,9 +32,17 @@ const destroy = async (req: Request, res: Response) => {
     res.json(deleted);
 };
 
-router.route("/").get(index);
-router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/:id").delete(destroy);
+const login = async (req: Request, res: Response) => {
+    const {firstname, lastname, password} = req.body
+    const token = await store.login(firstname, lastname, password)
+
+    res.json(token)
+}
+
+router.route("/login").post(login);
+router.route("/").get(authenticate, index);
+router.route("/:id").get(authenticate, show);
+router.route("/").post(authenticate, create);
+router.route("/:id").delete(authenticate, destroy);
 
 export default router;

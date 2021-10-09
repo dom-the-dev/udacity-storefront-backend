@@ -13,3 +13,7 @@ export const hashPassword = (password: string): string => {
         parseInt(saltRounds)
     );
 };
+
+export const checkPassword = (password: string, hashedPassword: string): Promise<boolean> => {
+    return bcrypt.compare(password + pepper, hashedPassword);
+}

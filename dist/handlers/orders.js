@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var orders_1 = require("../models/orders");
+var authMiddleware_1 = require("../middleware/authMiddleware");
 var router = express_1["default"].Router();
 var store = new orders_1.OrderStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -112,9 +113,9 @@ var showCompletedUserOrders = function (req, res) { return __awaiter(void 0, voi
         }
     });
 }); };
-router.route("/").get(index);
-router.route("/:id").get(show);
-router.route("/").post(create);
-router.route("/user/:id").get(showCurrentUserOrders);
-router.route("/user/:id/completed").get(showCompletedUserOrders);
+router.route("/").get(authMiddleware_1.authenticate, index);
+router.route("/:id").get(authMiddleware_1.authenticate, show);
+router.route("/").post(authMiddleware_1.authenticate, create);
+router.route("/user/:id").get(authMiddleware_1.authenticate, showCurrentUserOrders);
+router.route("/user/:id/completed").get(authMiddleware_1.authenticate, showCompletedUserOrders);
 exports["default"] = router;
