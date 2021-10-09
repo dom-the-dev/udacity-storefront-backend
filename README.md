@@ -11,7 +11,7 @@ NodeJS programm connection to a Postgresql database to create, read, update and 
 - Copy env file `cp .env.dist .env`
 - Adjust environment variables with database credentials like in the given example below *.env Example*
 - Copy database config file `cp database.json.dist database.json`
-- Adjust environment variables with database credentials like in the given example below *database.json Example*
+- Adjust database credentials like in the given example below *database.json Example*
 - install db-migrate globally with `yarn global add db-migrate`
 - run `db-migrate up` to run migrations
 - have fun!
