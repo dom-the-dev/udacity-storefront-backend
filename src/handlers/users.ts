@@ -33,11 +33,11 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
-    const {firstname, lastname, password} = req.body
-    const token = await store.login(firstname, lastname, password)
+    const {firstname, lastname, password} = req.body;
+    const token = await store.login(firstname, lastname, password);
 
-    res.json(token)
-}
+    res.json(token);
+};
 
 router.route("/login").post(login);
 router.route("/").get(authenticate, index);

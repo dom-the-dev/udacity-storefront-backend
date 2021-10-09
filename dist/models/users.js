@@ -173,12 +173,12 @@ var UserStore = /** @class */ (function () {
                             return [2 /*return*/, jsonwebtoken_1["default"].sign(user, TOKEN_SECRET)];
                         }
                         else {
-                            return [2 /*return*/, 'No user found'];
+                            return [2 /*return*/, "No user found"];
                         }
                         return [3 /*break*/, 6];
                     case 5:
                         err_5 = _b.sent();
-                        throw new Error('Could not get user');
+                        throw new Error("Could not get user");
                     case 6: return [2 /*return*/];
                 }
             });

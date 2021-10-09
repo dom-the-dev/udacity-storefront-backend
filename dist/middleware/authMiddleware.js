@@ -13,10 +13,10 @@ var authenticate = function (req, res, next) {
     try {
         if (!authorizationHeader) {
             res.status(401);
-            res.json('Access denied, no token');
+            res.json("Access denied, no token");
         }
         else {
-            var token = authorizationHeader.split(' ')[1];
+            var token = authorizationHeader.split(" ")[1];
             // @ts-ignore
             jsonwebtoken_1["default"].verify(token, TOKEN_SECRET);
             next();
@@ -24,8 +24,7 @@ var authenticate = function (req, res, next) {
     }
     catch (err) {
         res.status(401);
-        res.json('Access denied, invalid token');
-        return;
+        res.json("Access denied, invalid token");
     }
 };
 exports.authenticate = authenticate;

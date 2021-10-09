@@ -1,11 +1,11 @@
 import Client from "../database";
 import {checkPassword, hashPassword} from "../helpers/passwordHelper";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const {TOKEN_SECRET} = process.env
+const {TOKEN_SECRET} = process.env;
 
 export type UserPrototype = {
     firstname: string,
@@ -100,13 +100,13 @@ export class UserStore {
 
             if (user && await checkPassword(password, user.password)) {
                 // @ts-ignore
-                return jwt.sign(user, TOKEN_SECRET)
+                return jwt.sign(user, TOKEN_SECRET);
             } else {
-                return 'No user found'
+                return "No user found";
             }
 
         } catch (err) {
-            throw new Error('Could not get user');
+            throw new Error("Could not get user");
         }
 
     }
