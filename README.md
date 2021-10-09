@@ -61,6 +61,12 @@ TOKEN_SECRET=safe-for-token
 
 ## Available scripts
 
+### Build Server
+- run `yarn tsc` to build server
+
+### Start Server
+- run `yarn start`
+
 ### Start Development Server
 - run `yarn watch` to start development server
 
