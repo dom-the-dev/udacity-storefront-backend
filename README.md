@@ -14,6 +14,7 @@ NodeJS programm connection to a Postgresql database to create, read, update and 
 - Adjust database credentials like in the given example below *database.json Example*
 - install db-migrate globally with `yarn global add db-migrate`
 - run `db-migrate up` to run migrations
+- Check [REQUIREMENTS.md](REQUIREMENTS.md) for endpoint and model informations
 - have fun!
 
 ### Database Connection
@@ -86,6 +87,7 @@ TOKEN_SECRET=safe-for-token
 - [Postgres](https://www.postgresql.org/)
 - [JSONWebToken](https://www.npmjs.com/package/jsonwebtoken)
 - [bCrypt](https://www.npmjs.com/package/bcrypt)
+- [cross-env](https://www.npmjs.com/package/cross-env)
 
 ## Resources & useful links
 - [Node Docs](https://nodejs.org/api/fs.html)

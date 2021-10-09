@@ -2,6 +2,13 @@
 
 ## Endpoints
 
+**INFO:** 
+Token required means that these endpoint need authentication. Therefore, you need to pass a bearer token in authorization header.
+To allow user creation and authentication we have two user endpoint `POST /api/users` and `POST /api/users/login`.
+The login endpoint returns a token which can be used in authorization header.
+
+Different to the requirements create user endpoint is not token required for better testing.  
+
 ### Products
 
 | Method | Request Type | URL | Token required |
@@ -19,7 +26,7 @@
 |--------|--------------| --- | -------------- |
 | Index | GET |`/api/users` | **true**
 | Show | GET |`/api/users/:id` | **true**
-| Create | POST |`/api/users` | **true**
+| Create | POST |`/api/users` | **false**
 | Delete | DELETE | `/api/users/:id` | **true**
 | Login | GET | `/api/users/login` | **false**
 
