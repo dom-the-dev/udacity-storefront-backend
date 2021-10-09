@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const saltRounds: string = process.env.SALT_ROUNDS ?? "10";
-const pepper: string = process.env.BCRYPT_PASSWORD ?? "default";
+// @ts-ignore
+const saltRounds: string = process.env.SALT_ROUNDS;
+// @ts-ignore
+const pepper: string = process.env.BCRYPT_PASSWORD;
 
 export const hashPassword = (password: string): string => {
 
