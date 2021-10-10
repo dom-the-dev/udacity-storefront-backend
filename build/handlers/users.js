@@ -93,7 +93,7 @@ var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
             case 0: return [4 /*yield*/, store["delete"](parseInt(req.params.id))];
             case 1:
                 deleted = _a.sent();
-                res.json(deleted);
+                res.json({ message: deleted });
                 return [2 /*return*/];
         }
     });

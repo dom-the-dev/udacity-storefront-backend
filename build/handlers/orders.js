@@ -89,6 +89,18 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
+var destroy = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var deleted;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, store["delete"](parseInt(req.params.id))];
+            case 1:
+                deleted = _a.sent();
+                res.json({ message: deleted });
+                return [2 /*return*/];
+        }
+    });
+}); };
 var showCurrentUserOrders = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var orders;
     return __generator(this, function (_a) {
@@ -115,6 +127,7 @@ var showCompletedUserOrders = function (req, res) { return __awaiter(void 0, voi
 }); };
 router.route("/").get(authMiddleware_1.authenticate, index);
 router.route("/:id").get(authMiddleware_1.authenticate, show);
+router.route("/:id")["delete"](authMiddleware_1.authenticate, destroy);
 router.route("/").post(authMiddleware_1.authenticate, create);
 router.route("/user/:id").get(authMiddleware_1.authenticate, showCurrentUserOrders);
 router.route("/user/:id/completed").get(authMiddleware_1.authenticate, showCompletedUserOrders);

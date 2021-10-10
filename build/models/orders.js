@@ -131,9 +131,33 @@ var OrderStore = /** @class */ (function () {
             });
         });
     };
+    OrderStore.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = "DELETE FROM orders WHERE id=($1)";
+                        return [4 /*yield*/, database_1["default"].connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        _a.sent();
+                        conn.release();
+                        return [2 /*return*/, "Order successfully deleted"];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not delete order " + id + ". Error: " + err_4);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     OrderStore.prototype.showCurrentUserOrders = function (user_id) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, err_4;
+            var sql, conn, result, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -146,10 +170,10 @@ var OrderStore = /** @class */ (function () {
                     case 2:
                         result = _a.sent();
                         conn.release();
-                        return [2 /*return*/, result.rows];
+                        return [2 /*return*/, result.rows[0]];
                     case 3:
-                        err_4 = _a.sent();
-                        throw new Error("Could not get orders. Error: " + err_4);
+                        err_5 = _a.sent();
+                        throw new Error("Could not get orders. Error: " + err_5);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -157,7 +181,7 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.showCompletedUserOrders = function (user_id) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, err_5;
+            var sql, conn, result, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -172,8 +196,8 @@ var OrderStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows];
                     case 3:
-                        err_5 = _a.sent();
-                        throw new Error("Could not get orders. Error: " + err_5);
+                        err_6 = _a.sent();
+                        throw new Error("Could not get orders. Error: " + err_6);
                     case 4: return [2 /*return*/];
                 }
             });
