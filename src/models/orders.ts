@@ -72,6 +72,22 @@ export class OrderStore {
         }
     }
 
+    async delete(id: number): Promise<string> {
+        try {
+            const sql = "DELETE FROM orders WHERE id=($1)";
+            const conn = await Client.connect();
+
+            await conn.query(sql, [id]);
+
+            conn.release();
+
+            return "Order successfully deleted";
+
+        } catch (err) {
+            throw new Error(`Could not delete order ${id}. Error: ${err}`);
+        }
+    }
+
     async showCurrentUserOrders(user_id: number): Promise<Order[]> {
         try {
             const sql = "SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1";
@@ -81,7 +97,7 @@ export class OrderStore {
 
             conn.release();
 
-            return result.rows;
+            return result.rows[0];
         } catch (err) {
             throw new Error(`Could not get orders. Error: ${err}`);
         }

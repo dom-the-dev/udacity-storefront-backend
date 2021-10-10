@@ -31,6 +31,12 @@ const create = async (req: Request, res: Response) => {
     res.json(newOrder);
 };
 
+
+const destroy = async (req: Request, res: Response) => {
+    const deleted = await store.delete(parseInt(req.params.id));
+    res.json({message: deleted});
+};
+
 const showCurrentUserOrders = async (req: Request, res: Response) => {
     const orders = await store.showCurrentUserOrders(parseInt(req.params.id));
     res.json(orders);
@@ -43,6 +49,7 @@ const showCompletedUserOrders = async (req: Request, res: Response) => {
 
 router.route("/").get(authenticate, index);
 router.route("/:id").get(authenticate, show);
+router.route("/:id").delete(authenticate, destroy);
 router.route("/").post(authenticate, create);
 router.route("/user/:id").get(authenticate, showCurrentUserOrders);
 router.route("/user/:id/completed").get(authenticate, showCompletedUserOrders);

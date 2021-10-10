@@ -42,7 +42,24 @@ describe("Order Model", () => {
             order_completed: false
         });
 
-        expect(result.id).toEqual(1);
+        expect(typeof result).toBe("object");
+    });
+
+    it("delete method should delete an order", async () => {
+        const order = await store.create({
+            user_id: user.id,
+            products: [
+                {
+                    product_id: product.id,
+                    quantity: 10
+                }
+            ],
+            order_completed: false
+        });
+
+        const result = await store.delete(order.id);
+
+        expect(result).toEqual("Order successfully deleted");
     });
 
     afterAll(async () => {

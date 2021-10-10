@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import app from '../../server'
+import app from "../../server";
 import {User, UserStore} from "../../models/users";
 
 const request = supertest(app);
@@ -26,7 +26,7 @@ describe("User Handler", () => {
         // @ts-ignore
         token = jwt.sign(user, TOKEN_SECRET);
 
-    })
+    });
 
     it("index response with status 401", async () => {
         const response = await request.get("/api/users");
@@ -34,19 +34,19 @@ describe("User Handler", () => {
     });
 
     it("index response with status 200", async () => {
-        const response = await request.get("/api/users").set('Authorization', 'bearer ' + token);
+        const response = await request.get("/api/users").set("Authorization", "bearer " + token);
         expect(response.statusCode).toBe(200);
     });
 
     it("index response an array with an object", async () => {
-        const response = await request.get("/api/users").set('Authorization', 'bearer ' + token);
+        const response = await request.get("/api/users").set("Authorization", "bearer " + token);
 
         expect(response.body[0].firstname).toEqual("Dominik");
         expect(response.body[0].lastname).toEqual("Amrugiewicz");
     });
 
     it("show should response an user", async () => {
-        const response = await request.get(`/api/users/${user.id}`).set('Authorization', 'bearer ' + token);
+        const response = await request.get(`/api/users/${user.id}`).set("Authorization", "bearer " + token);
 
         expect(response.body.firstname).toEqual("Dominik");
         expect(response.body.lastname).toEqual("Amrugiewicz");
@@ -60,12 +60,12 @@ describe("User Handler", () => {
                 "lastname": "User",
                 "password": "password"
             })
-            .set('Authorization', 'bearer ' + token);
+            .set("Authorization", "bearer " + token);
 
         expect(response.body.firstname).toEqual("Super");
         expect(response.body.lastname).toEqual("User");
 
-        await store.delete(response.body.id)
+        await store.delete(response.body.id);
     });
 
     it("should delete an user", async () => {
@@ -77,28 +77,28 @@ describe("User Handler", () => {
 
         const response = await request
             .delete(`/api/users/${user.id}`)
-            .set('Authorization', 'bearer ' + token);
+            .set("Authorization", "bearer " + token);
 
         expect(response.body).toEqual({"message": "User successfully deleted"});
 
     });
 
     it("should response a token", async () => {
-        const response = await request.post('/api/users/login')
+        const response = await request.post("/api/users/login")
             .send({
                 "firstname": "Dominik",
                 "lastname": "Amrugiewicz",
                 "password": "password"
-            })
+            });
 
         // @ts-ignore
         const verification = jwt.verify(token, TOKEN_SECRET);
 
         expect(verification).toBeTruthy();
-    })
+    });
 
     afterAll(async () => {
-        await store.delete(user.id)
-    })
+        await store.delete(user.id);
+    });
 
 });
