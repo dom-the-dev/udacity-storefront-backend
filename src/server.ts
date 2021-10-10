@@ -24,3 +24,5 @@ app.use("/api/orders", order_routes);
 app.listen(process.env.APP_PORT, function () {
     console.log("starting app on: http://localhost:3000");
 });
+
+export default app;
